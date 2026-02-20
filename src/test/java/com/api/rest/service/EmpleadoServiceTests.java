@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -84,7 +85,9 @@ public class EmpleadoServiceTests {
                 .build();
 
         //when
+        given(empleadoRepository.findAll()).willReturn(List.of(empleado, empleado1));
 
         //then
+	
     }
 }
