@@ -1,1 +1,1 @@
-key.message=Hello World
+key.message=Hello Universe
