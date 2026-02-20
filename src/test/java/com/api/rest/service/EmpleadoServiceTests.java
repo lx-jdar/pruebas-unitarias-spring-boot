@@ -72,4 +72,19 @@ public class EmpleadoServiceTests {
         //then
         verify(empleadoRepository, never()).save(any(Empleado.class));
     }
+
+    @DisplayName("Test para listar a los empleados")
+    @Test
+    void testListarEmpleados() {
+        //given
+        Empleado empleado1 = Empleado.builder()
+                .id(1L)
+                .nombre("Julen")
+                .apellido("j2@gmail.com")
+                .build();
+
+        //when
+
+        //then
+    }
 }

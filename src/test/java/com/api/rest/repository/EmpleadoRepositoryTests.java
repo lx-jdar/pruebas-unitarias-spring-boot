@@ -69,6 +69,7 @@ public class EmpleadoRepositoryTests {
     @DisplayName("Test para obtener un empleado por ID")
     @Test
     void testObtenerEmpleadoPorId() {
+        // given
         empleadoRepository.save(empleado);
 
         //when - comportamiento o acción que vamos a probar
@@ -81,6 +82,7 @@ public class EmpleadoRepositoryTests {
     @DisplayName("Test para actualizar un empleado")
     @Test
     void testActualizarEmpleado() {
+        // given
         empleadoRepository.save(empleado);
 
         //when
@@ -98,6 +100,7 @@ public class EmpleadoRepositoryTests {
     @DisplayName("Test para eliminar un empleado")
     @Test
     void testEliminarEmpleado() {
+        // given
         empleadoRepository.save(empleado);
 
         //when
