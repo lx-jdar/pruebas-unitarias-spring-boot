@@ -1,3 +1,3 @@
 function sum(a, b) {
-    return Number(a) + Number(b);
+    return Number.parseInt(a) + Number.parseInt(b);
 }
