@@ -4,8 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.*;
 
 import com.api.rest.exception.ResourceNotFoundException;
 import com.api.rest.model.Empleado;
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class EmpleadoServiceTests {
     void setup() {
         System.out.println("===== Hola Mundo!!! =====");
         empleado = Empleado.builder()
+                .id(1L)
                 .nombre("Christian")
                 .apellido("Ramirez")
                 .email("c1@gmail.com")
@@ -83,11 +85,79 @@ public class EmpleadoServiceTests {
                 .nombre("Julen")
                 .apellido("j2@gmail.com")
                 .build();
-
-        //when
         given(empleadoRepository.findAll()).willReturn(List.of(empleado, empleado1));
 
+        //when
+        List<Empleado> empleados = empleadoService.getAllEmpleados();
+
         //then
-	
+	    assertThat(empleados).isNotNull();
+        assertThat(empleados.size()).isEqualTo(2);
+
     }
+
+    @DisplayName("Test para retornar una lista vacia")
+    @Test
+    void testListarColeccionEmpleadosVacia() {
+        //given
+        Empleado empleado1 = Empleado.builder()
+                .id(1L)
+                .nombre("Julen")
+                .apellido("j2@gmail.com")
+                .build();
+        given(empleadoRepository.findAll()).willReturn(Collections.emptyList());
+
+        //when
+        List<Empleado> listaEmpleados = empleadoService.getAllEmpleados();
+
+        //then
+        assertThat(listaEmpleados).isEmpty();
+        assertThat(listaEmpleados.size()).isEqualTo(0);
+    }
+
+    @DisplayName("Test para obtener un empleado por ID")
+    @Test
+    void testObtenerEmpleadoPorId() {
+
+        //given
+        given(empleadoRepository.findById(1L)).willReturn(Optional.of(empleado));
+
+        //when
+        Empleado empleadoGuardado = empleadoService.getEmpleadoById(empleado.getId()).get();
+
+        //then
+        assertThat(empleadoGuardado).isNotNull();
+
+    }
+
+    @DisplayName("Test para actualizar un empleado")
+    @Test
+    void testActualizarEmpleado() {
+        //given
+        given(empleadoRepository.save(empleado)).willReturn(empleado);
+        empleado.setEmail("chr2@gmail.com");
+        empleado.setNombre("Christian Raul");
+
+        //when
+        Empleado empleadoActualizado = empleadoService.updateEmpleado(empleado);
+
+        //then
+        assertThat(empleadoActualizado.getEmail()).isEqualTo("chr2@gmail.com");
+        assertThat(empleadoActualizado.getNombre()).isEqualTo("Christian Raul");
+    }
+
+    @DisplayName("Test para eliminar un empleado")
+    @Test
+    void testEliminarEmpleado() {
+        //given
+        long empleadoId = 1L;
+        willDoNothing().given(empleadoRepository).deleteById(empleadoId);
+
+        //when
+        empleadoService.deleteEmpleado(empleadoId);
+
+        //then
+        verify(empleadoRepository, times(1)).deleteById(empleadoId);
+    }
+
 }
