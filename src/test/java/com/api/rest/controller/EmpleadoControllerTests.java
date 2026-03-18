@@ -9,9 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import com.api.rest.model.Empleado;
 import com.api.rest.service.EmpleadoService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -157,11 +154,6 @@ public class EmpleadoControllerTests {
     void testActualizarEmpleadoNoEncontrado() throws Exception {
         //given
         long empleadoId = 1L;
-        Empleado empleadoGuardado = Empleado.builder()
-                .nombre("Christian")
-                .apellido("Lopez")
-                .email("j2@gmail.com")
-                .build();
 
         Empleado empleadoActualizado = Empleado.builder()
                 .nombre("Christian Raul")

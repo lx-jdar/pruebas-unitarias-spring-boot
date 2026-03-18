@@ -100,11 +100,6 @@ public class EmpleadoServiceTests {
     @Test
     void testListarColeccionEmpleadosVacia() {
         //given
-        Empleado empleado1 = Empleado.builder()
-                .id(1L)
-                .nombre("Julen")
-                .apellido("j2@gmail.com")
-                .build();
         given(empleadoRepository.findAll()).willReturn(Collections.emptyList());
 
         //when
@@ -112,7 +107,6 @@ public class EmpleadoServiceTests {
 
         //then
         assertThat(listaEmpleados).isEmpty();
-        assertThat(listaEmpleados.size()).isEqualTo(0);
     }
 
     @DisplayName("Test para obtener un empleado por ID")
